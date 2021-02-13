@@ -33,7 +33,7 @@ public class GoogleTranslateUtil {
 //暂时不清楚tkk的获得方式  询问原作者中... 先写死在html里了
 
     /**功能：请求谷歌翻译
-     *等待修改  剪切法只能获取到一段文字 但不用剪切法对于一词多义会出现大量结果
+     *等待修改想法  剪切法只能获取到一段文字 但不用剪切法，对于一词多义的单字会出现大量结果
      * @param url
      */
     private void sendGet(String url) {
@@ -127,13 +127,15 @@ public class GoogleTranslateUtil {
 
     /**
      *去除特殊字符   未完善
-     * 理论上应该要去除全部转义字符
+     * 理论上应该要去除全部转义字符 但暂时没想到好方法
      * @return
      */
 
     private String inputPr(String q)
     {
+        String regEx = "[\n`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         String s=q.replaceAll("\r|\n", " ");
+        s=s.replaceAll(regEx, "");
         return s;
     }
     /**通过本地js获取tk
