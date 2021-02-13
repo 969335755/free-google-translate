@@ -1,4 +1,4 @@
-package com.github.user969335755;
+package com.github.GuoFangPeng;
 
 
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -34,7 +33,7 @@ public class GoogleTranslateUtil {
 //暂时不清楚tkk的获得方式  询问原作者中... 先写死在html里了
 
     /**功能：请求谷歌翻译
-     *
+     *等待修改  剪切法只能获取到一段文字 但不用剪切法对于一词多义会出现大量结果
      * @param url
      */
     private void sendGet(String url) {
@@ -73,7 +72,7 @@ public class GoogleTranslateUtil {
 
     private  String construct_url(String tk, String q, String from, String to) {
             String base = url + "?client=webapp&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&otf=2&ssel=0&tsel=0&kc=1&tk=" + tk + "&q=" + q + "&sl=" + from + "&tl=" + to;
-            Log.e("tse","=====base======" + base);
+            Log.i("tse","=====base======" + base);
             return base;
     }
 
@@ -83,8 +82,9 @@ public class GoogleTranslateUtil {
     public void query(String q) {
         try {
             //q = URLEncoder.encode(q);
-            //不能encode   会出错  询问作者中
-            Log.e("tse","=====src======" +q );
+            //不能encode   会出错
+            q=inputPr(q);
+            Log.i("tse","=====src======" +q );
             callEvaluateJavascript(q,"auto","zh-CN");   //获得tk
         } catch (Exception e) {
             googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
@@ -98,13 +98,15 @@ public class GoogleTranslateUtil {
      */
     public void query(String q,String from) {
         try {
-            Log.e("tse","=====src======" +q );
+            q=inputPr(q);
+            Log.i("tse","=====src======" +q );
             callEvaluateJavascript(q,from,"zh-CN");
         } catch (Exception e) {
             googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
             Log.e("tse","=====encode error=====" + e.getMessage());
         }
     }
+
 
     /**
      *
@@ -114,7 +116,8 @@ public class GoogleTranslateUtil {
      */
     public void query(String q,String from,String to) {
         try {
-            Log.e("tse","=====src======" +q );
+            q=inputPr(q);
+            Log.i("tse","=====src======" +q );
             callEvaluateJavascript(q,from,to);
         } catch (Exception e) {
             googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
@@ -122,6 +125,17 @@ public class GoogleTranslateUtil {
         }
     }
 
+    /**
+     *去除特殊字符   未完善
+     * 理论上应该要去除全部转义字符
+     * @return
+     */
+
+    private String inputPr(String q)
+    {
+        String s=q.replaceAll("\r|\n", " ");
+        return s;
+    }
     /**通过本地js获取tk
      * @param q
      * @param from
@@ -136,7 +150,7 @@ public class GoogleTranslateUtil {
             }
             else {
                 String tk = value.substring(1, value.length() - 1);
-                Log.e("tse","=====tk=====" + tk);
+                Log.i("tse","=====tk=====" + tk);
                 String baseUrl = construct_url(tk, q, from,to);
                 sendGet(baseUrl);
             }

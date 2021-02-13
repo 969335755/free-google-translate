@@ -3,12 +3,11 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.github.user969335755.GoogleTranslateUtil;
+import com.github.GuoFangPeng.GoogleTranslateUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             });
         });
         button.setOnClickListener(view -> {
-            g.query(srctext.getText().toString().replaceAll("\r|\n", " "));
+            g.query(srctext.getText().toString());
         });
     }
 }
