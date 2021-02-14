@@ -13,11 +13,11 @@ Free Google Translator API 免费的Google翻译，其中的破解思路主要�
 [# [VictorZhang2014](https://github.com/VictorZhang2014)/**[free-google-translate](https://github.com/VictorZhang2014/free-google-translate)**](https://github.com/VictorZhang2014/free-google-translate)<br/>
 <br/>
 
-###自用 留档
+自用 留档
 
 # Android使用
 
-##导入
+导入
 
 
     allprojects {
@@ -35,11 +35,11 @@ Free Google Translator API 免费的Google翻译，其中的破解思路主要�
 	}
 
 
-##权限
+权限
 
     <uses-permission android:name="android.permission.INTERNET"/>
     
-##代码
+代码
 
 ```java
 GoogleTranslateUtil.defaulanguage="zh-CN";  //设置默认翻译的目标语言
@@ -55,6 +55,10 @@ button.setOnClickListener(view -> {
     g.query(edittext.getText().toString());  //请求翻译
 });
 ```
+<br/>
+#在填写目标语言缩写时不知道该语言的缩写是什么怎么办？
+[谷歌翻译](https://translate.google.cn/)
+打开谷歌翻译的网页，找到你想要知道缩写的语言，看导航栏，上面sl=后面那个就是缩写
 <br/>
 #所使用到的库
 
