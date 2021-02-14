@@ -14,11 +14,33 @@ Free Google Translator API 免费的Google翻译，其中的破解思路主要�
 <br/>
 
 ###自用 留档
+
 # Android使用
+
+##导入
+
+
+    allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+>
+
+	dependencies {
+			...
+	        implementation 'com.github.GuoFangPeng:free-google-translate:an_0.0.1'
+	}
+
+
 ##权限
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    
 ##代码
+
 ```java
 GoogleTranslateUtil.defaulanguage="zh-CN";  //设置默认翻译的目标语言
 GoogleTranslateUtil g=new GoogleTranslateUtil(this, (code, response) -> {
