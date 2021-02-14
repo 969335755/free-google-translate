@@ -9,7 +9,7 @@ Free Google Translator API 免费的Google翻译，其中的破解思路主要�
 <br/>
 <br/>
 
-# 其他语言的使用方法请去原作者处查看
+# 其他编程语言的使用方法请去原作者处查看
 [# [VictorZhang2014](https://github.com/VictorZhang2014)/**[free-google-translate](https://github.com/VictorZhang2014/free-google-translate)**](https://github.com/VictorZhang2014/free-google-translate)<br/>
 <br/>
 
@@ -60,7 +60,7 @@ button.setOnClickListener(view -> {
 ## 在填写目标语言缩写时不知道该语言的缩写是什么怎么办？
 
 [谷歌翻译](https://translate.google.cn/)
-打开谷歌翻译的网页，找到你想要知道缩写的语言，看导航栏，上面sl=后面那个就是缩写
+打开谷歌翻译的网页，找到你想要知道缩写的语言，看地址栏，上面sl=后面那个就是缩写
 <br/>
 
 ## 所使用到的库
