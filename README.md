@@ -12,7 +12,13 @@ Free Google Translator API 免费的Google翻译，其中的破解思路主要�
 # 其他语言的使用方法请去原作者处查看
 [# [VictorZhang2014](https://github.com/VictorZhang2014)/**[free-google-translate](https://github.com/VictorZhang2014/free-google-translate)**](https://github.com/VictorZhang2014/free-google-translate)<br/>
 <br/>
+
+###自用 留档
 # Android使用
+##权限
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+##代码
 ```java
 GoogleTranslateUtil.defaulanguage="zh-CN";  //设置默认翻译的目标语言
 GoogleTranslateUtil g=new GoogleTranslateUtil(this, (code, response) -> {
@@ -31,5 +37,3 @@ button.setOnClickListener(view -> {
 #所使用到的库
 
 [okhttp](https://github.com/square/okhttp)
-
-
