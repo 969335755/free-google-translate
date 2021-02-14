@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         srctext = findViewById(R.id.ed_text);
         Button button = findViewById(R.id.btn_call_api);
 
+        GoogleTranslateUtil.defaulanguage="zh-CN";
         GoogleTranslateUtil g=new GoogleTranslateUtil(this, (type, response) -> {
             mTxtResult.post(() -> {     //一定要post 回到主进程  方式随意  但一定要回到主进程
                 mTxtResult.setText(response);

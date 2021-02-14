@@ -17,6 +17,7 @@ import okhttp3.ResponseBody;
 public class GoogleTranslateUtil {
     private WebView webView;
     private GoogleTranslateCallBack googleTranslateCallBack;
+    public static String defaulanguage="zh-CN";
 
     public GoogleTranslateUtil(Context context, GoogleTranslateCallBack googleTranslateCallBack) {
         webView=new WebView(context);
@@ -85,7 +86,7 @@ public class GoogleTranslateUtil {
             //不能encode   会出错
             q=inputPr(q);
             Log.i("tse","=====src======" +q );
-            callEvaluateJavascript(q,"auto","zh-CN");   //获得tk
+            callEvaluateJavascript(q,"auto",defaulanguage);   //获得tk
         } catch (Exception e) {
             googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
             Log.e("tse","=====encode error=====" + e.getMessage());
@@ -100,7 +101,7 @@ public class GoogleTranslateUtil {
         try {
             q=inputPr(q);
             Log.i("tse","=====src======" +q );
-            callEvaluateJavascript(q,from,"zh-CN");
+            callEvaluateJavascript(q,from,defaulanguage);
         } catch (Exception e) {
             googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
             Log.e("tse","=====encode error=====" + e.getMessage());
