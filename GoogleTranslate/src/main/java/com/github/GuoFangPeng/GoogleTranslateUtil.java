@@ -50,6 +50,7 @@ public class GoogleTranslateUtil {
     {
         webView.destroy();
         googleTranslateCallBack=null;
+        context=null;
 
     }
 
