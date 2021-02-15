@@ -2,11 +2,14 @@ package com.github.GuoFangPeng;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -19,21 +22,57 @@ import okhttp3.ResponseBody;
 public class GoogleTranslateUtil {
     private WebView webView;
     private GoogleTranslateCallBack googleTranslateCallBack;
+    private Context context;
     public static String default_target_language= GoogleLanguageList.Chinese_simplified;
+    static String url = "https://translate.google.cn/translate_a/single";
+    private Boolean TkError=false;
+    //    static String  tkk = "434674.96463358"; // 随时都有可能需要更新的TKK值
+    //暂时不清楚tkk的获得方式  询问原作者中... 先写死在html里了
+    //经抓包推测，谷歌翻译更换了新的方式获取翻译结果，原先的tkk或者说是xid现在无法从获得  但该请求方式依旧可以使用
 
     public GoogleTranslateUtil(Context context, GoogleTranslateCallBack googleTranslateCallBack) {
+        this.context=context;
         webView=new WebView(context);
         this.googleTranslateCallBack=googleTranslateCallBack;
         WebSettings webSettings = webView.getSettings();
         webSettings.setAllowUniversalAccessFromFileURLs(true);
         webSettings.setJavaScriptEnabled(true);  //开启js
+        if(!isFileExists("index.html",context))
+        {
+            Toast.makeText(context,"无法使用，谷歌本地获取TK的文件不存在",Toast.LENGTH_LONG).show();
+            Log.e("tse","请检查软件的目录下是否有index.html文件");
+            TkError=true;
+        }
         webView.loadUrl("file:///android_asset/index.html");
         webView.setWebViewClient(new WebViewClient());
     }
+    public void onDestroy()
+    {
+        webView.destroy();
+        googleTranslateCallBack=null;
 
-    static String url = "https://translate.google.cn/translate_a/single";
-//    static String  tkk = "434674.96463358"; // 随时都有可能需要更新的TKK值
-//暂时不清楚tkk的获得方式  询问原作者中... 先写死在html里了
+    }
+
+    private boolean isFileExists(String filename,Context context) {
+
+        AssetManager assetManager = context.getAssets();
+        try {
+            String[] names = assetManager.list("");
+            for (int i = 0; i < names.length; i++) {
+                if (names[i].equals(filename.trim())) {
+                    Log.i("tse", "存在");
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.i("tse","不存在");
+            return false;
+        }
+        Log.i("tse","不存在");
+        return false;
+    }
+
 
     /**功能：请求谷歌翻译
      *等待修改想法  剪切法只能获取到一段文字 但不用剪切法，对于一词多义的单字会出现大量结果
@@ -84,6 +123,11 @@ public class GoogleTranslateUtil {
      */
     public void query(String q) {
         try {
+            if(TkError)
+            {
+                Toast.makeText(context,"无法使用，谷歌本地获取TK的文件不存在",Toast.LENGTH_LONG).show();
+                return;
+            }
             //q = URLEncoder.encode(q);
             //不能encode   会出错
             q=inputPr(q);
@@ -101,6 +145,11 @@ public class GoogleTranslateUtil {
      */
     public void query(String q,String from) {
         try {
+            if(TkError)
+            {
+                Toast.makeText(context,"无法使用，谷歌本地获取TK的文件不存在",Toast.LENGTH_LONG).show();
+                return;
+            }
             q=inputPr(q);
             Log.i("tse","=====src======" +q );
             callEvaluateJavascript(q,from,default_target_language);
@@ -119,6 +168,11 @@ public class GoogleTranslateUtil {
      */
     public void query(String q,String from,String to) {
         try {
+            if(TkError)
+            {
+                Toast.makeText(context,"无法使用，谷歌本地获取TK的文件不存在",Toast.LENGTH_LONG).show();
+                return;
+            }
             q=inputPr(q);
             Log.i("tse","=====src======" +q );
             callEvaluateJavascript(q,from,to);
