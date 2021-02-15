@@ -6,6 +6,7 @@ import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -14,10 +15,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+
 public class GoogleTranslateUtil {
     private WebView webView;
     private GoogleTranslateCallBack googleTranslateCallBack;
-    public static String defaulanguage="zh-CN";
+    public static String default_target_language= GoogleLanguageList.Chinese_simplified;
 
     public GoogleTranslateUtil(Context context, GoogleTranslateCallBack googleTranslateCallBack) {
         webView=new WebView(context);
@@ -86,7 +88,7 @@ public class GoogleTranslateUtil {
             //不能encode   会出错
             q=inputPr(q);
             Log.i("tse","=====src======" +q );
-            callEvaluateJavascript(q,"auto",defaulanguage);   //获得tk
+            callEvaluateJavascript(q,"auto",default_target_language);   //获得tk
         } catch (Exception e) {
             googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
             Log.e("tse","=====encode error=====" + e.getMessage());
@@ -101,7 +103,7 @@ public class GoogleTranslateUtil {
         try {
             q=inputPr(q);
             Log.i("tse","=====src======" +q );
-            callEvaluateJavascript(q,from,defaulanguage);
+            callEvaluateJavascript(q,from,default_target_language);
         } catch (Exception e) {
             googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
             Log.e("tse","=====encode error=====" + e.getMessage());
@@ -134,9 +136,10 @@ public class GoogleTranslateUtil {
 
     private String inputPr(String q)
     {
-        String regEx = "[\n`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        String regEx = "[\n`~!@#$%^&*()+=|{}':;'\\[\\]<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         String s=q.replaceAll("\r|\n", " ");
         s=s.replaceAll(regEx, "");
+        s=q.replace(".",",");
         return s;
     }
     /**通过本地js获取tk
