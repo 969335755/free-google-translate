@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,9 +26,7 @@ public class MainActivity extends AppCompatActivity {
         //等于 GoogleTranslateUtil.default_target_language="zh-CN";
         GoogleTranslateUtil.default_target_language= GoogleLanguageList.Chinese_simplified;
         GoogleTranslateUtil g=new GoogleTranslateUtil(this, (type, response) -> {
-            mTxtResult.post(() -> {     //一定要post 回到主进程  方式随意  但一定要回到主进程
                 mTxtResult.setText(response);
-            });
         });
         button.setOnClickListener(view -> {
             g.query(srctext.getText().toString());
