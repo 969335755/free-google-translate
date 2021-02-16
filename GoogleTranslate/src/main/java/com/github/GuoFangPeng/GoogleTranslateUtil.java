@@ -201,7 +201,7 @@ public class GoogleTranslateUtil {
         String regEx = "[\n`~!@#$%^&*()+=|{}':;'\\[\\]<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         String s=q.replaceAll("\r|\n", " ");
         s=s.replaceAll(regEx, "");
-        s=q.replace(".",",");
+        s=s.replace(".",",");
         return s;
     }
     /**通过本地js获取tk
