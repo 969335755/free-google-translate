@@ -3,6 +3,8 @@ package com.github.GuoFangPeng;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -93,7 +95,12 @@ public class GoogleTranslateUtil {
                 ResponseBody body = response.body();
                 String tem=body.string();
                 tem=tem.substring(4,tem.indexOf(",")-1);//简单粗暴地用剪切法
-                googleTranslateCallBack.getGoogleTransCallBackResult(0, tem);
+                Handler mainHandler = new Handler(Looper.getMainLooper());
+                String finalTem = tem;
+                mainHandler.post(() -> {
+                    googleTranslateCallBack.getGoogleTransCallBackResult(0, finalTem);
+                });
+
 
             } catch (IOException e) {
                 Log.e("tse","=====sendGet======" + e.toString());
