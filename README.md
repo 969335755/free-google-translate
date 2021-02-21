@@ -14,6 +14,7 @@ Free Google Translator API 免费的Google翻译，其中的破解思路主要�
 <br/>
 
 自用 留档
+#更新后的代码不是在master中
 
 # Android使用
 
@@ -31,7 +32,7 @@ Free Google Translator API 免费的Google翻译，其中的破解思路主要�
 
 	dependencies {
 			...
-	        implementation 'com.github.GuoFangPeng:free-google-translate:an_0.0.1'
+	        implementation 'com.github.GuoFangPeng:free-google-translate:an_0.0.3'
 	}
 
 
@@ -42,22 +43,22 @@ Free Google Translator API 免费的Google翻译，其中的破解思路主要�
 代码
 
 ```java
-GoogleTranslateUtil.defaulanguage="zh-CN";  //设置默认翻译的目标语言
+GoogleTranslateUtil.defaulanguage= GoogleLanguageList.Chinese_simplified;  //设置默认翻译的目标语言
 GoogleTranslateUtil g=new GoogleTranslateUtil(this, (code, response) -> {
-//code错误码  0表示正确  |response 返回翻译文本/错误信息
- //一定要post回到主进程  方式随意  但一定要回到主进程  
-    textview.post(() -> {    
+//code错误码  0表示正确  |response 返回翻译文本/错误信息 
       textview.setText(response);  //对翻译文本操作
-    });  
 });  
 
 button.setOnClickListener(view -> {  
     g.query(edittext.getText().toString());  //请求翻译
+//            g.query(srctext.getText().toString(),GoogleLanguageList.English,GoogleLanguageList.Chinese_simplified);
 });
 ```
 <br/>
+#增加GoogleLanguageList类
+包括了一些些语言的缩写
 
-## 在填写目标语言缩写时不知道该语言的缩写是什么怎么办？
+## 在填写语言缩写时不知道该语言的缩写是什么怎么办？
 
 [谷歌翻译](https://translate.google.cn/)
 打开谷歌翻译的网页，找到你想要知道缩写的语言，看地址栏，上面sl=后面那个就是缩写
