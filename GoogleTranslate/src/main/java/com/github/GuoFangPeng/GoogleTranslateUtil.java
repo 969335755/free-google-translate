@@ -28,6 +28,7 @@ public class GoogleTranslateUtil {
     public static String default_target_language= GoogleLanguageList.Chinese_simplified;
     static String url = "https://translate.google.cn/translate_a/single";
     private Boolean TkError=false;
+    Handler mainHandler = new Handler(Looper.getMainLooper());
     //    static String  tkk = "434674.96463358"; // 随时都有可能需要更新的TKK值
     //暂时不清楚tkk的获得方式  询问原作者中... 先写死在html里了
     //经抓包推测，谷歌翻译更换了新的方式获取翻译结果，原先的tkk或者说是xid现在无法从获得  但该请求方式依旧可以使用
@@ -95,7 +96,7 @@ public class GoogleTranslateUtil {
                 ResponseBody body = response.body();
                 String tem=body.string();
                 tem=tem.substring(4,tem.indexOf(",")-1);//简单粗暴地用剪切法
-                Handler mainHandler = new Handler(Looper.getMainLooper());
+
                 String finalTem = tem;
                 mainHandler.post(() -> {
                     googleTranslateCallBack.getGoogleTransCallBackResult(0, finalTem);
@@ -104,7 +105,10 @@ public class GoogleTranslateUtil {
 
             } catch (IOException e) {
                 Log.e("tse","=====sendGet======" + e.toString());
-                googleTranslateCallBack.getGoogleTransCallBackResult(4,"获取翻译结果失败");
+                mainHandler.post(() -> {
+                    googleTranslateCallBack.getGoogleTransCallBackResult(4,"获取翻译结果失败");
+                });
+
             }
 
         }).start();
@@ -142,7 +146,10 @@ public class GoogleTranslateUtil {
             Log.i("tse","=====src======" +q );
             callEvaluateJavascript(q,"auto",default_target_language);   //获得tk
         } catch (Exception e) {
-            googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
+            mainHandler.post(() -> {
+                googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
+            });
+
             Log.e("tse","=====encode error=====" + e.getMessage());
         }
     }
@@ -162,7 +169,11 @@ public class GoogleTranslateUtil {
             Log.i("tse","=====src======" +q );
             callEvaluateJavascript(q,from,default_target_language);
         } catch (Exception e) {
-            googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
+            mainHandler.post(() -> {
+                googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
+            });
+
+
             Log.e("tse","=====encode error=====" + e.getMessage());
         }
     }
@@ -185,7 +196,9 @@ public class GoogleTranslateUtil {
             Log.i("tse","=====src======" +q );
             callEvaluateJavascript(q,from,to);
         } catch (Exception e) {
-            googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
+            mainHandler.post(() -> {
+                googleTranslateCallBack.getGoogleTransCallBackResult(1,"原文encode失败");
+            });
             Log.e("tse","=====encode error=====" + e.getMessage());
         }
     }
@@ -214,7 +227,10 @@ public class GoogleTranslateUtil {
             Log.i("tse", value);
             if (value.isEmpty()||value.equals("null"))
             {
-                googleTranslateCallBack.getGoogleTransCallBackResult(2,"获取tk失败");
+                mainHandler.post(() -> {
+                    googleTranslateCallBack.getGoogleTransCallBackResult(2,"获取tk失败");
+                });
+
             }
             else {
                 String tk = value.substring(1, value.length() - 1);
